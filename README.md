@@ -28,7 +28,6 @@ RaftEval — это фреймворк для **batch-оценки и интер
 
 | Метрика               | Где считается / способ вычисления                   | За что отвечает |
 |-----------------------|----------------------------------------------------|-----------------|
-| **ROUGE**             | `rouge_score`                                      | Лексическое совпадение с эталоном |
 | **BERTScore**         | `bert_score`                                       | Семантическое сходство с эталоном |
 | **GEval**             | LLM-based → prompt + LLM                           | Общая оценка качества ответа |
 | **Faithfulness**      | LLM-based → prompt + LLM                           | Фактологическая корректность (нет ли галлюцинаций) |
@@ -60,7 +59,7 @@ raft-eval evaluate --input-path my_data.xlsx --output-path output.xlsx --metrics
 | RAG QA System (Retrieval Augmented QA) | Faithfulness, Coverage, Relevancy                     |
 | LLM Chat Assistant (Customer Support)  | Relevancy, Style, Toxicity, Faithfulness              |
 | Marketing AI Writer (Copywriting)     | Style, Relevancy, Length, Cost per answer             |
-| Summarization / Generation            | ROUGE, BERTScore, Faithfulness, GEval                 |
+| Summarization / Generation            | BERTScore, Faithfulness, GEval                         |
 | Internal LLM Quality Audit            | GEval, Faithfulness, Coverage, Cost                   |
 
 ## 📦 Архитектура
@@ -83,7 +82,6 @@ raft-eval evaluate --input-path my_data.xlsx --output-path output.xlsx --metrics
 - ✅ Answer Relevancy
 - ✅ Coverage
 - ✅ Style Score
-- ✅ ROUGE
 - ✅ BERTScore
 - ✅ Token Count
 - ✅ Cost per Answer
@@ -104,7 +102,7 @@ raft-eval evaluate --input-path my_data.xlsx --output-path output.xlsx --metrics
 raft-eval evaluate \
   --input-path DataBase.xlsx \
   --output-path output.xlsx \
-  --metrics faithfulness,answer_relevancy,coverage,style_score,rouge,bert_score,token_count,cost_metric
+  --metrics faithfulness,answer_relevancy,coverage,style_score,bert_score,token_count,cost_metric
 ```
 
 ### 🚀 Interactive mode
