@@ -1,0 +1,34 @@
+[project]
+name = "raft-eval"
+version = "0.1.0"
+description = "RAFT Eval: Framework for evaluating RAG / LLM pipelines"
+authors = [
+    {name = "Ramil", email = "ramil9754@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.9"
+
+dependencies = [
+    "typer",
+    "pandas",
+    "bert-score",
+    "rouge-score",
+    "openai",
+    "jsonlines",
+    "sentence-transformers",
+    "tqdm",
+    "nltk",
+    "scikit-learn",
+    "transformers",
+    "torch",
+    "matplotlib",
+    "rich"
+]
+
+[project.scripts]
+raft-eval = "raft_eval.cli:app"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
