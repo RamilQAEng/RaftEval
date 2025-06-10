@@ -45,6 +45,7 @@ RaftEval — это фреймворк для **batch-оценки и интер
     - Вопрос (Question)
     - Контекст (Context, retrieved from KB)
     - Ответ модели (Answer)
+    - Эталон ответа (gold_answer)
 
 2. Вызываете:
 ```bash
