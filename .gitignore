@@ -11,7 +11,7 @@ env/
 ENV/
 env.bak/
 .env
-
+.xlsx
 # PyInstaller
 *.manifest
 *.spec

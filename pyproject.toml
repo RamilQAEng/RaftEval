@@ -23,7 +23,9 @@ dependencies = [
     "transformers",
     "torch",
     "matplotlib",
-    "rich"
+    "rich",
+    "openpyxl",
+    "python-dotenv"
 ]
 
 [project.scripts]
