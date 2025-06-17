@@ -126,7 +126,7 @@ OPENROUTER_API_KEY=sk-...
 raft-eval evaluate \
   --input-path DataBase.xlsx \
   --output-path output.xlsx \
-  --metrics faithfulness,answer_relevancy,coverage,style_score,bert_score,token_count,cost_metric
+  --metrics faithfulness,answer_relevancy,coverage,style_score,token_count,cost_metric
 ```
 
 ### 🚀 Interactive mode
