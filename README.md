@@ -95,6 +95,29 @@ raft-eval evaluate --input-path my_data.xlsx --output-path output.xlsx --metrics
 - ⬜ Оптимизация стоимости (vectorization?)
 - ⬜ Интеграция в CI/CD pipeline
 
+## 📦 Установка через GitHub
+
+# (Рекомендуется) Создайте изолированное окружение
+```bash
+python3 -m venv venv
+```
+```bash
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+```
+# Установка последней версии RaftEval с GitHub
+```bash
+pip install git+https://github.com/RamilQAEng/RaftEval.git
+```
+⚙️ Конфигурация API-ключа (OpenAI)
+RaftEval использует OpenAI / OpenRouter для LLM-оценки. Необходим API-ключ:
+
+# Создайте .env файл в корне проекта
+```bash
+touch .env
+```
+Внутрь .env добавьте строку:
+OPENROUTER_API_KEY=sk-...
+
 ## 💻 Пример использования
 
 ### Evaluate
