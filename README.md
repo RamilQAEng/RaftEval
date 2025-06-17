@@ -112,8 +112,13 @@ raft-eval evaluate --input-path my_data.xlsx --output-path output.xlsx --metrics
 ```bash
 python3 -m venv venv
 ```
+Linux/MacOS
 ```bash
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+source venv/bin/activate
+```
+Windows: 
+```bash
+venv\Scripts\activate
 ```
 # Установка последней версии RaftEval с GitHub
 ```bash
