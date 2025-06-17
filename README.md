@@ -128,9 +128,16 @@ pip install git+https://github.com/RamilQAEng/RaftEval.git
 RaftEval использует OpenAI / OpenRouter для LLM-оценки. Необходим API-ключ:
 
 # Создайте .env файл в корне проекта
+
+Linux/macOS:
 ```bash
 touch .env
 ```
+Windows
+```bash
+New-Item -Path . -Name ".env" -ItemType "file"
+```
+
 Внутрь .env добавьте строку:
 OPENROUTER_API_KEY=sk-...
 
