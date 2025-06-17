@@ -28,7 +28,6 @@ RaftEval — это фреймворк для **batch-оценки и интер
 
 | Метрика               | Где считается / способ вычисления                   | За что отвечает |
 |-----------------------|----------------------------------------------------|-----------------|
-| **ROUGE**             | `rouge_score`                                      | Лексическое совпадение с эталоном |
 | **BERTScore**         | `bert_score`                                       | Семантическое сходство с эталоном |
 | **GEval**             | LLM-based → prompt + LLM                           | Общая оценка качества ответа |
 | **Faithfulness**      | LLM-based → prompt + LLM                           | Фактологическая корректность (нет ли галлюцинаций) |
@@ -46,6 +45,7 @@ RaftEval — это фреймворк для **batch-оценки и интер
     - Вопрос (Question)
     - Контекст (Context, retrieved from KB)
     - Ответ модели (Answer)
+    - Эталон ответа (gold_answer)
 
 2. Вызываете:
 ```bash
@@ -60,7 +60,7 @@ raft-eval evaluate --input-path my_data.xlsx --output-path output.xlsx --metrics
 | RAG QA System (Retrieval Augmented QA) | Faithfulness, Coverage, Relevancy                     |
 | LLM Chat Assistant (Customer Support)  | Relevancy, Style, Toxicity, Faithfulness              |
 | Marketing AI Writer (Copywriting)     | Style, Relevancy, Length, Cost per answer             |
-| Summarization / Generation            | ROUGE, BERTScore, Faithfulness, GEval                 |
+| Summarization / Generation            | BERTScore, Faithfulness, GEval                         |
 | Internal LLM Quality Audit            | GEval, Faithfulness, Coverage, Cost                   |
 
 ## 📦 Архитектура
@@ -77,24 +77,69 @@ raft-eval evaluate --input-path my_data.xlsx --output-path output.xlsx --metrics
 - LLM модели могут быть любыми (**GPT-4o**, **Claude**, **Gemini** и др.).
 - Промпты для каждой метрики задаются в `prompts.py`.
 
-## 🚧 TODO / Roadmap
+# 🛣️ RaftEval Roadmap
 
-- ✅ Faithfulness
-- ✅ Answer Relevancy
-- ✅ Coverage
-- ✅ Style Score
-- ✅ ROUGE
-- ✅ BERTScore
-- ✅ Token Count
-- ✅ Cost per Answer
-- ✅ Logging batch results (JSONL)
-- ✅ CLI интерфейс
-- ✅ Interactive mode
-- ⬜ GEval → доделать и протестировать
-- ⬜ Toxicity → интегрировать prompt + LLM
-- ⬜ Параллельная / асинхронная обработка
-- ⬜ Оптимизация стоимости (vectorization?)
-- ⬜ Интеграция в CI/CD pipeline
+## 🔜 Версия 1.1 — Production-ready
+
+- **Кэширование LLM-вызовов**  
+  Встроенный in-memory cache (`dict`, `@lru_cache`) и disk-кэш на базе `diskcache` для повторного использования между сессиями.
+
+- **Асинхронная обработка и батчи**  
+  Реализация `evaluate_batch()` с параллельной обработкой. Использование `asyncio` и `Semaphore` для ускорения оценки больших датасетов (10k+ запросов).
+
+- **Retry и обработка ошибок**  
+  Подключение `tenacity` или кастомного retry-обёртки с exponential backoff для защиты от ошибок сети и перегрузки API (429/500).
+
+- **Юнит-тестирование ядра**  
+  Тесты для всех `.compute()` методов, утилит токенизации, подсчёта стоимости и кэширования. Цель — покрытие ≥ 90%.
+
+- **Настроить базовый CI/CD pipeline через GitHub Actions**  
+  Запуск тестов, линтера, проверка CLI, генерация coverage-отчётов.
+
+---
+
+## 🟡 Версия 1.2 — Архитектура и API
+
+- Вынести все метрики в единый `Metric`-класс с интерфейсом `.compute()`  
+- Реализовать `Metric Registry` с поддержкой `@register_metric`  
+- Поддержка нескольких LLM-клиентов через универсальный интерфейс (`OpenAI`, `OpenRouter`, `DeepSeek`)  
+- **Реализовать API-интерфейс через класс `Evaluator`**  
+- Подготовить документацию (CLI/SDK usage, добавление кастомных метрик) с возможной интеграцией в `mkdocs`
+
+## 📦 Установка через GitHub
+
+# (Рекомендуется) Создайте изолированное окружение
+```bash
+python3 -m venv venv
+```
+Linux/MacOS
+```bash
+source venv/bin/activate
+```
+Windows: 
+```bash
+venv\Scripts\activate
+```
+# Установка последней версии RaftEval с GitHub
+```bash
+pip install git+https://github.com/RamilQAEng/RaftEval.git
+```
+⚙️ Конфигурация API-ключа (OpenAI)
+RaftEval использует OpenAI / OpenRouter для LLM-оценки. Необходим API-ключ:
+
+# Создайте .env файл в корне проекта
+
+Linux/macOS:
+```bash
+touch .env
+```
+Windows
+```bash
+New-Item -Path . -Name ".env" -ItemType "file"
+```
+
+Внутрь .env добавьте строку:
+OPENROUTER_API_KEY=sk-...
 
 ## 💻 Пример использования
 
@@ -104,13 +149,13 @@ raft-eval evaluate --input-path my_data.xlsx --output-path output.xlsx --metrics
 raft-eval evaluate \
   --input-path DataBase.xlsx \
   --output-path output.xlsx \
-  --metrics faithfulness,answer_relevancy,coverage,style_score,rouge,bert_score,token_count,cost_metric
+  --metrics faithfulness,answer_relevancy,coverage,style_score,token_count,cost_metric
 ```
 
 ### 🚀 Interactive mode
 
 ```bash
-raft-eval interactive --input-path my_db.xlsx
+raft-eval interactive --knowledge-base-path NameBase.xlsx
 ```
 
 Можно ввести произвольный вопрос:
