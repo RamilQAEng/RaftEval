@@ -122,3 +122,20 @@ def build_prompt_for_metric(metric_name, question, context, answer):
         context=context.strip(),
         answer=answer.strip()
     )
+
+def build_prompt(question: str, context: str) -> str:
+    return DEFAULT_PROMPT_TEMPLATE.format(question=question, context=context)
+
+DEFAULT_PROMPT_TEMPLATE = """Ты — помощник, который отвечает на вопросы ТОЛЬКО на основе приведённого ниже контекста.
+Если нужной информации в контексте НЕТ — ответь строго фразой: "нет информации".
+
+Контекст:
+{context}
+
+Вопрос:
+{question}
+
+Ответ:
+"""
+
+
