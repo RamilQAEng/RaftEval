@@ -109,7 +109,7 @@ raft-eval evaluate \
 ### 🚀 Interactive mode
 
 ```bash
-raft-eval interactive --input-path my_db.xlsx
+raft-eval interactive --knowledge-base-path NameBase.xlsx
 ```
 
 Можно ввести произвольный вопрос:
