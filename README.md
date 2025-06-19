@@ -165,6 +165,6 @@ raft-eval interactive --knowledge-base-path NameBase.xlsx
 
 ## 🤝 Авторство
 
-- **Проект:** RaftEval
-- **Автор:** Ramil Allakhverdiev
+- **Проект:** RaftEval 
+- **Автор:** Ramil Allakhverdiev [@Rambajo]
 - **Помощь:** OpenAI API + 🛠 собственные кастомные метрики
