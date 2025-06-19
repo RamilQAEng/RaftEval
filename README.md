@@ -139,8 +139,9 @@ New-Item -Path . -Name ".env" -ItemType "file"
 ```
 
 Внутрь .env добавьте строку:
-OPENROUTER_API_KEY=sk-...
-
+```bash
+OPENAI_API_KEY=sk-...
+```
 ## 💻 Пример использования
 
 ### Evaluate
