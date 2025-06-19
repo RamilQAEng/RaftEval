@@ -167,4 +167,4 @@ raft-eval interactive --knowledge-base-path NameBase.xlsx
 
 - **Проект:** RaftEval
 - **Автор:** Ramil Allakhverdiev
-- **Помощь:** ChatGPT 4o + OpenRouter API + 🛠 собственные кастомные метрики
+- **Помощь:** OpenAI API + 🛠 собственные кастомные метрики
